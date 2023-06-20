@@ -1,0 +1,2 @@
+
+PREFIX = "uptime-agent"

@@ -1,0 +1,21 @@
+services:
+  uptimeagent:
+    container_name: uptimeagent
+    image: tiuub/uptimeagent
+    command: celery -A uptime_agent beat --loglevel=info
+    environment:
+      - "BROKER_URL=redis://uptimeagent-redis:6379/0"
+      - "REDBEAT_REDIS_URL=redis://uptimeagent-redis:6379/1"
+  uptimeagent-worker:
+    container_name: uptimeagent-worker
+    image: tiuub/uptimeagent
+    command: celery -A uptime_agent worker --loglevel=info
+    environment:
+      - "BROKER_URL=redis://uptimeagent-redis:6379/0"
+      - "REDBEAT_REDIS_URL=redis://uptimeagent-redis:6379/1"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  uptimeagent-redis:
+    container_name: uptimeagent-redis
+    image: redis:6.2-alpine
+    restart: always
