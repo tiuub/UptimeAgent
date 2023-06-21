@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY_IMAGE }}
+          images: tiuub/uptimeagent
       -
         name: Build and push
         uses: docker/build-push-action@v4
